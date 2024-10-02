@@ -5,132 +5,11 @@ def main(page: Page):
     # SETUP
     page.title = "Todo App"
     page.window.width = 1800
-    page.window.width = 1200
+    page.window.height = 1200
     page.theme_mode = ThemeMode.SYSTEM
-    SLATE_100 = "#f1f5f9"
-    SLATE_200 = "#e2e8f09"
     page.padding = 10
-    page.bgcolor = SLATE_100
-    LOGO_URL = (
-        "https://static-00.iconduck.com/assets.00/todo-icon-1024x1024-8p9cd4g6.png"
-    )
-    # END SETUP
-
-    # ROUTING
-    bar = NavigationBar(
-        destinations=[
-            NavigationBarDestination(icon=icons.EXPLORE, label="Home"),
-            NavigationBarDestination(icon=icons.EXPLORE, label="Automations"),
-            NavigationBarDestination(icon=icons.PIE_CHART_ROUNDED, label="Reports"),
-            NavigationBarDestination(
-                icon=icons.BOOKMARK_BORDER,
-                selected_icon=icons.BOOKMARK,
-                label="Store",
-            ),
-            NavigationBarDestination(icon=icons.ACCOUNT_TREE_OUTLINED, label="Projects"),
-        ],
-        on_change=lambda x: page.go(
-            f"/{x.control.destinations[x.control.selected_index].label.lower()}"
-        ),
-    )
-
-    def render(path, controls=[Text("Hi")]):
-        if page.route == f"{path}":
-            page.views.append(View(f"{path}", controls, bgcolor=SLATE_100))
-
-    def route_change(route):
-        page.views.clear()
-
-        render(
-            "/home",
-            [
-                AppBar(title=Text("Tasks"), bgcolor=colors.SURFACE_VARIANT),
-                Row(
-                    [sidebar(), main_area], vertical_alignment=CrossAxisAlignment.START
-                ),
-                bar,
-            ],
-        )
-
-        render(
-            "/store",
-            [
-                AppBar(title=Text("Store"), bgcolor=colors.SURFACE_VARIANT),
-                sidebar(),
-                ElevatedButton("Go Home", on_click=lambda _: page.go("/home")),
-                bar,
-            ],
-        )
-
-        render(
-            "/projects",
-            [
-                AppBar(title=Text("Projects"), bgcolor=colors.SURFACE_VARIANT),
-                navbar,
-                sidebar(),
-                ElevatedButton("Go Home", on_click=lambda _: page.go("/home")),
-                bar,
-            ],
-        )
-
-        render(
-            "/automations",
-            [
-                AppBar(title=Text("Automations"), bgcolor=colors.SURFACE_VARIANT),
-                sidebar(),
-                GridView([Text("Automations Page")]),
-                ElevatedButton("Visit Store", on_click=lambda _: page.go("/store")),
-                bar,
-            ],
-        )
-
-        render(
-            "/reports",
-            [
-                AppBar(title=Text("Reports"), bgcolor=colors.SURFACE_VARIANT),
-                sidebar(),
-                ElevatedButton("Go Home", on_click=lambda _: page.go("/reports")),
-                bar,
-            ],
-        )
-
-        page.update()
-
-    page.on_route_change = route_change
-    page.go(page.route)
-    page.go("/home")
-    # END ROUTING
-
-    # GUI
-    navbar = Container(
-        Row(
-            [
-                Row(
-                    [
-                        Image(
-                            width=30,
-                            height=30,
-                            src=LOGO_URL,
-                        ),
-                        Text(page.title, color="#374151"),
-                    ]
-                ),
-                Row(
-                    [
-                        CupertinoTextField("Search", bgcolor="#e2e8f0", color="black"),
-                        ElevatedButton("Search", color="white", bgcolor="black"),
-                        Text("About", color="#374151"),
-                        Text("Contact", color="#374151"),
-                        IconButton(icon=icons.SETTINGS_ROUNDED, icon_color="#111827"),
-                    ]
-                ),
-            ],
-            alignment=MainAxisAlignment.SPACE_BETWEEN,
-        ),
-        bgcolor="white",
-        padding=10,
-        border_radius=8,
-    )
+    page.adaptive = True
+    LOGO_URL = "assets/icon.png"
 
     def sidebar():
         return Container(
@@ -139,41 +18,39 @@ def main(page: Page):
                     TextButton(
                         "Tasks",
                         icon=icons.FACT_CHECK_OUTLINED,
-                        icon_color="black",
                         on_click=lambda x: page.go("/home"),
                     ),
                     TextButton(
                         "Projects",
                         icon=icons.ACCOUNT_TREE_OUTLINED,
-                        icon_color="black",
                         on_click=lambda x: page.go("/projects"),
                     ),
                     TextButton(
-                        "Routine", icon=icons.OFFLINE_BOLT_OUTLINED, icon_color="black"
+                        "Routine",
+                        icon=icons.OFFLINE_BOLT_OUTLINED,
                     ),
                     TextButton(
-                        "Notes", icon=icons.STICKY_NOTE_2_OUTLINED, icon_color="black"
+                        "Notes",
+                        icon=icons.STICKY_NOTE_2_OUTLINED,
                     ),
                     TextButton(
                         "Automations",
                         icon=icons.AUTO_AWESOME_OUTLINED,
-                        icon_color="black",
                         on_click=lambda x: page.go("/automations"),
                     ),
                     TextButton(
                         "Reports",
                         icon=icons.PIE_CHART_ROUNDED,
-                        icon_color="black",
                         on_click=lambda x: page.go("/reports"),
                     ),
                 ],
                 spacing=20,
             ),
-            bgcolor="white",
             padding=16,
             border_radius=10,
         )
 
+    # END SETUP
     task_list = {
         "name": "Linkedin",
         "timeline": "Sun 12/12 - Mon 1/13",
@@ -251,6 +128,17 @@ def main(page: Page):
         ],
     }
 
+    def dates(tl):
+        return Row(
+            [
+                Container(
+                    Text(tl["timeline"]),
+                    padding=8,
+                    border_radius=10,
+                ),
+            ]
+        )
+
     def NewTaskList(tl=[]):
         task_list_component = Container(
             Column(
@@ -275,25 +163,44 @@ def main(page: Page):
                     ),
                 ]
             ),
-            bgcolor="white",
             padding=10,
             border_radius=10,
             width=200,
         )
         return task_list_component
 
-    def dates(tl):
-        return Row(
+    navbar = Container(
+        Row(
             [
-                Container(
-                    Text(tl["timeline"]),
-                    padding=8,
-                    border_radius=10,
-                    bgcolor="#e2e8f0",
+                Row(
+                    [
+                        Image(
+                            width=30,
+                            height=30,
+                            src=LOGO_URL,
+                        ),
+                        Text(page.title, color="#374151"),
+                    ]
                 ),
-            ]
-        )
-
+                Row(
+                    [
+                        TextField(hint_text="Search"),
+                        ElevatedButton(
+                            "Search",
+                        ),
+                        Text("About", color="#374151"),
+                        Text("Contact", color="#374151"),
+                        IconButton(
+                            icon=icons.SETTINGS_ROUNDED,
+                        ),
+                    ]
+                ),
+            ],
+            alignment=MainAxisAlignment.SPACE_BETWEEN,
+        ),
+        padding=10,
+        border_radius=8,
+    )
     main_area = Container(
         Column(
             [
@@ -311,7 +218,6 @@ def main(page: Page):
                         ],
                         alignment=MainAxisAlignment.SPACE_BETWEEN,
                     ),
-                    bgcolor="white",
                     padding=10,
                     border_radius=10,
                 ),
@@ -324,7 +230,6 @@ def main(page: Page):
                                         Text("Research", color="white", width=160),
                                         padding=20,
                                         border_radius=6,
-                                        bgcolor="purple",
                                     ),
                                     NewTaskList(task_list),
                                     NewTaskList(task_list),
@@ -339,7 +244,6 @@ def main(page: Page):
                                         Text("Design", color="white", width=160),
                                         padding=20,
                                         border_radius=6,
-                                        bgcolor="teal",
                                     ),
                                     NewTaskList(design_task_list),
                                     NewTaskList(design_task_list2),
@@ -354,7 +258,6 @@ def main(page: Page):
                                         Text("Development", color="white", width=160),
                                         padding=20,
                                         border_radius=6,
-                                        bgcolor="black",
                                     ),
                                     NewTaskList(dev_task_list),
                                     NewTaskList(dev_task_list2),
@@ -370,7 +273,6 @@ def main(page: Page):
                                         Text("Marketing", color="white", width=160),
                                         padding=20,
                                         border_radius=6,
-                                        bgcolor="orange",
                                     ),
                                     NewTaskList(marketing_task_list),
                                     NewTaskList(marketing_task_list),
@@ -385,7 +287,6 @@ def main(page: Page):
                                         Text("Sales", color="white", width=160),
                                         padding=20,
                                         border_radius=6,
-                                        bgcolor="red",
                                     ),
                                     NewTaskList(sales_task_list),
                                 ]
@@ -400,8 +301,105 @@ def main(page: Page):
             ]
         ),
         expand=True,
-        bgcolor="#f1f5f9",
     )
+
+    # ROUTING
+    bar = NavigationBar(
+        destinations=[
+            NavigationBarDestination(icon=icons.EXPLORE, label="Home"),
+            NavigationBarDestination(icon=icons.EXPLORE, label="Automations"),
+            NavigationBarDestination(icon=icons.PIE_CHART_ROUNDED, label="Reports"),
+            NavigationBarDestination(
+                icon=icons.BOOKMARK_BORDER,
+                selected_icon=icons.BOOKMARK,
+                label="Store",
+            ),
+            NavigationBarDestination(
+                icon=icons.ACCOUNT_TREE_OUTLINED, label="Projects"
+            ),
+        ],
+        on_change=lambda x: page.go(
+            f"/{x.control.destinations[x.control.selected_index].label.lower()}"
+        ),
+    )
+
+    def render(path, controls=[Text("Hi")]):
+        if page.route == f"{path}":
+            page.views.append(View(f"{path}", controls))
+
+    def route_change(route):
+        page.views.clear()
+
+        render(
+            "/home",
+            [
+                AppBar(title=Text("Tasks")),
+                Row(
+                    [sidebar(), main_area], vertical_alignment=CrossAxisAlignment.START
+                ),
+                bar,
+            ],
+        )
+
+        render(
+            "/store",
+            [
+                AppBar(
+                    title=Text("Store"),
+                ),
+                sidebar(),
+                ElevatedButton("Go Home", on_click=lambda _: page.go("/home")),
+                bar,
+            ],
+        )
+
+        render(
+            "/projects",
+            [
+                AppBar(
+                    title=Text("Projects"),
+                ),
+                navbar,
+                sidebar(),
+                ElevatedButton("Go Home", on_click=lambda _: page.go("/home")),
+                bar,
+            ],
+        )
+
+        render(
+            "/automations",
+            [
+                AppBar(
+                    title=Text("Automations"),
+                ),
+                sidebar(),
+                GridView([Text("Automations Page")]),
+                ElevatedButton("Visit Store", on_click=lambda _: page.go("/store")),
+                bar,
+            ],
+        )
+
+        render(
+            "/reports",
+            [
+                AppBar(
+                    title=Text("Reports"),
+                ),
+                sidebar(),
+                ElevatedButton("Go Home", on_click=lambda _: page.go("/reports")),
+                bar,
+            ],
+        )
+
+        page.update()
+
+    page.on_route_change = route_change
+    page.go(page.route)
+    page.go("/home")
+    # END ROUTING
+
+    # GUI
+
     # END GUI
 
     # page.add(
