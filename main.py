@@ -179,7 +179,7 @@ def main(page: Page):
                             height=30,
                             src=LOGO_URL,
                         ),
-                        Text(page.title, color="#374151"),
+                        Text(page.title, ),
                     ]
                 ),
                 Row(
@@ -188,8 +188,8 @@ def main(page: Page):
                         ElevatedButton(
                             "Search",
                         ),
-                        Text("About", color="#374151"),
-                        Text("Contact", color="#374151"),
+                        Text("About", ),
+                        Text("Contact", ),
                         IconButton(
                             icon=icons.SETTINGS_ROUNDED,
                         ),
@@ -227,7 +227,7 @@ def main(page: Page):
                             Column(
                                 [
                                     Container(
-                                        Text("Research", color="white", width=160),
+                                        Text("Research", width=160),
                                         padding=20,
                                         border_radius=6,
                                     ),
@@ -241,7 +241,7 @@ def main(page: Page):
                             Column(
                                 [
                                     Container(
-                                        Text("Design", color="white", width=160),
+                                        Text("Design", width=160),
                                         padding=20,
                                         border_radius=6,
                                     ),
@@ -255,7 +255,7 @@ def main(page: Page):
                             Column(
                                 [
                                     Container(
-                                        Text("Development", color="white", width=160),
+                                        Text("Development", width=160),
                                         padding=20,
                                         border_radius=6,
                                     ),
@@ -270,7 +270,7 @@ def main(page: Page):
                             Column(
                                 [
                                     Container(
-                                        Text("Marketing", color="white", width=160),
+                                        Text("Marketing", width=160),
                                         padding=20,
                                         border_radius=6,
                                     ),
@@ -284,7 +284,7 @@ def main(page: Page):
                             Column(
                                 [
                                     Container(
-                                        Text("Sales", color="white", width=160),
+                                        Text("Sales", width=160),
                                         padding=20,
                                         border_radius=6,
                                     ),
