@@ -179,7 +179,9 @@ def main(page: Page):
                             height=30,
                             src=LOGO_URL,
                         ),
-                        Text(page.title, ),
+                        Text(
+                            page.title,
+                        ),
                     ]
                 ),
                 Row(
@@ -188,8 +190,12 @@ def main(page: Page):
                         ElevatedButton(
                             "Search",
                         ),
-                        Text("About", ),
-                        Text("Contact", ),
+                        Text(
+                            "About",
+                        ),
+                        Text(
+                            "Contact",
+                        ),
                         IconButton(
                             icon=icons.SETTINGS_ROUNDED,
                         ),
