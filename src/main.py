@@ -17,30 +17,30 @@ def main(page: Page):
                 [
                     TextButton(
                         "Tasks",
-                        icon=icons.FACT_CHECK_OUTLINED,
+                        icon=Icons.FACT_CHECK_OUTLINED,
                         on_click=lambda x: page.go("/home"),
                     ),
                     TextButton(
                         "Projects",
-                        icon=icons.ACCOUNT_TREE_OUTLINED,
+                        icon=Icons.ACCOUNT_TREE_OUTLINED,
                         on_click=lambda x: page.go("/projects"),
                     ),
                     TextButton(
                         "Routine",
-                        icon=icons.OFFLINE_BOLT_OUTLINED,
+                        icon=Icons.OFFLINE_BOLT_OUTLINED,
                     ),
                     TextButton(
                         "Notes",
-                        icon=icons.STICKY_NOTE_2_OUTLINED,
+                        icon=Icons.STICKY_NOTE_2_OUTLINED,
                     ),
                     TextButton(
                         "Automations",
-                        icon=icons.AUTO_AWESOME_OUTLINED,
+                        icon=Icons.AUTO_AWESOME_OUTLINED,
                         on_click=lambda x: page.go("/automations"),
                     ),
                     TextButton(
                         "Reports",
-                        icon=icons.PIE_CHART_ROUNDED,
+                        icon=Icons.PIE_CHART_ROUNDED,
                         on_click=lambda x: page.go("/reports"),
                     ),
                 ],
@@ -197,7 +197,7 @@ def main(page: Page):
                             "Contact",
                         ),
                         IconButton(
-                            icon=icons.SETTINGS_ROUNDED,
+                            icon=Icons.SETTINGS_ROUNDED,
                         ),
                     ]
                 ),
@@ -216,7 +216,7 @@ def main(page: Page):
                         [
                             Row(
                                 [
-                                    IconButton(icons.ARROW_BACK_ROUNDED),
+                                    IconButton(Icons.ARROW_BACK_ROUNDED),
                                     Text("Health Application for PHD Health"),
                                 ]
                             ),
@@ -312,16 +312,16 @@ def main(page: Page):
     # ROUTING
     bar = NavigationBar(
         destinations=[
-            NavigationBarDestination(icon=icons.EXPLORE, label="Home"),
-            NavigationBarDestination(icon=icons.EXPLORE, label="Automations"),
-            NavigationBarDestination(icon=icons.PIE_CHART_ROUNDED, label="Reports"),
+            NavigationBarDestination(icon=Icons.EXPLORE, label="Home"),
+            NavigationBarDestination(icon=Icons.EXPLORE, label="Automations"),
+            NavigationBarDestination(icon=Icons.PIE_CHART_ROUNDED, label="Reports"),
             NavigationBarDestination(
-                icon=icons.BOOKMARK_BORDER,
-                selected_icon=icons.BOOKMARK,
+                icon=Icons.BOOKMARK_BORDER,
+                selected_icon=Icons.BOOKMARK,
                 label="Store",
             ),
             NavigationBarDestination(
-                icon=icons.ACCOUNT_TREE_OUTLINED, label="Projects"
+                icon=Icons.ACCOUNT_TREE_OUTLINED, label="Projects"
             ),
         ],
         on_change=lambda x: page.go(
